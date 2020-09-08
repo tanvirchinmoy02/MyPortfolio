@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON LOCAL DATA FILE EXAMPLE</title>
+</head>
+<body>
+
+    <h1>JSON LOCAL DATA FILE EXAMPLE</h1>
+    <button id="showInfo">Get Data</button>
+    <div id="showme"></div>
+    <script>
+        document.getElementById("showInfo").addEventListener('click', onProcess);
+
+        function onProcess(){
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function() {
+                if(req.status==200){
+                    var people = JSON.parse(req.responseText)
+					var output= ' ';
+					 for(var i in people){
+					 output +=
+					 '<div>' +'<img src="'+people[i].avatar_url+'"  width="150" height="150">'+'<ul>' +'<li>ID: '+people[i].id+'</li>' +'<li>Login: '+people[i].login+'</li>' + '<li>Repos:'+people[i].repos_url+'</li>'+'</ul>' + '</div>';
+					 }
+            document.getElementById('showme').innerHTML = output;
+
+                }
+                
+            } 
+            req.send();
+        }
+    </script>
+</body>
+</html>
